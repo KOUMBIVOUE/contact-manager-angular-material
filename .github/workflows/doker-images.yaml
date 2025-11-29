@@ -42,4 +42,4 @@ jobs:
     - 
       name: Scan Docker image with Trivy
       run: |
-        trivy image ${username}/angular-material:light
+        sudo trivy image ${{ secrets.DOCKERHUB_USERNAME }}/angular-material:light
