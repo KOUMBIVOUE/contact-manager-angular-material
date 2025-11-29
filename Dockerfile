@@ -1,8 +1,9 @@
-FROM node
+FROM node:20.19.6-trixie-slim AS builder
 RUN apt-get update
 WORKDIR /usr/app
-COPY . ./
+COPY package*.json ./
 RUN npm install
+COPY . ./
 RUN npm run build
-EXPOSE 4200
-CMD ["npm", "run", "start"]
+FROM nginx:1.22.0-alpine
+COPY --from=builder /usr/app/dist/angularmaterial/ /usr/share/nginx/html/
